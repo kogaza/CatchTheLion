@@ -1,0 +1,53 @@
+*{
+  box-sizing: border-box;
+}
+html, body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body{
+  background-color: #eee;
+  font-family: sans;
+}
+.wrapper{
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.game-box{
+  width: 99%;
+  max-width: 600px;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.cell-label{
+  color: #f5773a;
+  text-align: center;
+  vertical-align: middle;
+  padding: 8px;
+}
+.cell{
+  border: 2px dashed #f5773a;
+  position: relative;
+  width: 33%;
+}
+.cell:after{
+  display: block;
+  content: '';
+  padding-top: 100%;
+}
+.animal{
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  top: 5%;
+  left: 5%;
+  background-color: #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
