@@ -19,7 +19,7 @@ body{
 }
 .game-box{
   width: 99%;
-  max-width: 600px;
+  max-width: 400px;
   border-spacing: 0;
   border-collapse: collapse;
 }
@@ -41,13 +41,72 @@ body{
 }
 .animal{
   position: absolute;
-  width: 90%;
-  height: 90%;
-  top: 5%;
-  left: 5%;
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
   background-color: #fff;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.animal.blue{
+  transform: rotate(180deg);
+}
+.dot{
+  width: 10%;
+  height: 10%;
+  border: 1px solid #800;
+  background-color: #f00;
+  border-radius: 50%;
+  position: absolute;
+}
+.dot-top{
+  top: 5%;
+  left: calc(50%-7px);
+}
+.dot-right{
+  top: calc(50%-7px);
+  right: 5%;
+}
+.dot-bottom{
+  bottom: 5%;
+  left: calc(50%-7px);
+}
+.dot-left{
+  top: calc(50%-7px);
+  left: 5%;
+}
+.dot-top-left{
+  top: 5%;
+  left: 5%;
+}
+.dot-top-right{
+  top: 5%;
+  right: 5%;
+}
+.dot-bottom-left{
+  bottom: 5%;
+  left: 5%;
+}
+.dot-bottom-right{
+  bottom: 5%;
+  right: 5%;
+}
+.giraffe{
+  background-image: url("../images/giraffe.jpeg");
+  background-size: cover;
+}
+.lion{
+  background-image: url("../images/lion.jpeg");
+  background-size: cover;
+}
+.elephant{
+  background-image: url("../images/elephant.jpeg");
+  background-size: cover;
+}
+.chicken{
+  background-image: url("../images/chicken.jpeg");
+  background-size: cover;
 }
