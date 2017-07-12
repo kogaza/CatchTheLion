@@ -1,6 +1,8 @@
 var STATE = {
   isPlaying: true,
   whoMoves: 0,
+  selectedCell: false,
+  availableCells: [],
   board: [
     ["giraffe", 0],
     ["lion", 0],
@@ -17,92 +19,83 @@ var STATE = {
   ]
 };
 var cells = document.querySelectorAll("td.cell");
-// console.log(cells);
 
 function getPlayerColor(player){
   return player === 0 ? "blue" : "green";
 }
 
-function giraffe(player){
-  var el = document.createElement("div");
-  el.className = "animal giraffe " + getPlayerColor(player);
-  el.innerHTML =  '<div class="symbol"></div>'+
-                  '<div class="dot dot-top"></div>'+
-                  '<div class="dot dot-right"></div>'+
-                  '<div class="dot dot-bottom"></div>'+
-                  '<div class="dot dot-left"></div>';
-  return el;
-}
-function lion(player){
-  var el = document.createElement("div");
-  el.className = "animal lion " + getPlayerColor(player);
-  el.innerHTML =  '<div class="symbol"></div>'+
-                  '<div class="dot dot-top"></div>'+
-                  '<div class="dot dot-right"></div>'+
-                  '<div class="dot dot-bottom"></div>'+
-                  '<div class="dot dot-left"></div>';//zmien kropki
-  return el;
-}
-function elephant(player){
-  var el = document.createElement("div");
-  el.className = "animal elephant " + getPlayerColor(player);
-  el.innerHTML =  '<div class="symbol"></div>'+
-                  '<div class="dot dot-top"></div>'+
-                  '<div class="dot dot-right"></div>'+
-                  '<div class="dot dot-bottom"></div>'+
-                  '<div class="dot dot-left"></div>';//zmien kropki
-  return el;
-}
-function chicken(player){
-  var el = document.createElement("div");
-  el.className = "animal chicken " + getPlayerColor(player);
-  el.innerHTML =  '<div class="symbol"></div>'+
-                  '<div class="dot dot-top"></div>'+
-                  '<div class="dot dot-right"></div>'+
-                  '<div class="dot dot-bottom"></div>'+
-                  '<div class="dot dot-left"></div>';//zmien kropki
-  return el;
-}
-
 function render(state){
   var cell;
   var animal;
-  var el;
+  var animalRow;
   var player;
+  var selectedCell = state.selectedCell;
+  var whoMoves = state.whoMoves;
+  var availableCells = state.availableCells;
+
   for(var i = 0; i < state.board.length; i++){
     cell = cells[i];
-    animal = state.board[i];
-    el = undefined;
-    player = animal[1];
-    switch (animal[0]) {
-      case "giraffe":
-        el = giraffe(player);
-        break;
-      case "lion":
-        el = lion(player);
-        break;
-      case "elephant":
-        el = elephant(player);
-        break;
-      case "chicken":
-        el = chicken(player);
-        break;
+    animalRow = state.board[i];
+    player = animalRow[1];
+    animal = animalRow[0];
+    renderAnimal(animal, player, cell);
+    cell.classList.remove('cell-available');
+    if(selectedCell === i){
+      cell.classList.add("cell-selected");
     }
-    console.log(cell,animal,el);
-    cell.innerHTML = "";
-    if(el !== undefined){
-      cell.appendChild(el);
+    else if(player === whoMoves){
+      cell.classList.add("cell-move");
+      cell.classList.remove('cell-selected');
+    }else{
+      cell.classList.remove("cell-move");
+      cell.classList.remove('cell-selected');
     }
   }
-  console.log("rendering", state);
+  for(var i = 0; i < availableCells.length; i++){
+    cell = cells[availableCells[i]];
+    cell.classList.add('cell-available');
+  }
 }
+
+function updateState(newState){
+  STATE = newState;
+  render(STATE);
+}
+
+function selectCell(id){
+  var newState = STATE;
+  newState.selectedCell = id;
+  // console.log(STATE.selectedCell);
+  newState.availableCells = [id + 3];
+
+  updateState(newState);
+}
+
+document.body.addEventListener('click', function(event){
+  if(event.target.classList.contains('cell-move')){
+    var id = parseInt(event.target.getAttribute('data-id'));
+    selectCell(id);
+  }
+})
+
 render(STATE);
+
+
+
+
+
+
+
+
+
+
 //symulowanie ruchu
 document.getElementById("state0").addEventListener("click", function(){
   render(STATE);
 });
 document.getElementById("state1").addEventListener("click", function(){
   render({
+    whoMoves: 1,
     board: [
       ["giraffe", 0],
       ["lion", 0],
@@ -121,6 +114,7 @@ document.getElementById("state1").addEventListener("click", function(){
 });
 document.getElementById("state2").addEventListener("click", function(){
   render({
+    whoMoves: 0,
     board: [
       ["giraffe", 0],
       ["lion", 0],
@@ -139,6 +133,7 @@ document.getElementById("state2").addEventListener("click", function(){
 });
 document.getElementById("state3").addEventListener("click", function(){
   render({
+    whoMoves: 1,
     board: [
       ["giraffe", 0],
       [],
