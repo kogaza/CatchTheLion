@@ -1,3 +1,4 @@
+//definicje obrazków zwierząt, kropek oraz gracza
 function giraffe(player){
   var el = document.createElement("div");
   el.className = "animal giraffe " + getPlayerColor(player);
@@ -39,6 +40,7 @@ function chicken(player){
                   '<div class="dot dot-top"></div>';
   return el;
 }
+//przypisanie do pól odpowiednich obrazków
  function renderAnimal(animal, player, cell){
    var el;
    switch (animal) {
